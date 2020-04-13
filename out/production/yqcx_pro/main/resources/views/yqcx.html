@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en" dir="ltr">
+
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+		">
+        <link rel="Shortcut Icon" type="image/x-icon" href="icon/favicon.ico" />
+    <title>岳阳市复工企业员工健康状况查询</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/newsky.css">
+    <link rel="stylesheet" href="css/layout.css">
+        <script src="js/jquery-2.1.4.min.js"></script>
+
+        <script type="text/javascript" >
+
+            function validateIdCard(idCard) {
+                //15位和18位身份证号码的正则表达式
+                var regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+                //如果通过该验证，说明身份证格式正确，但准确性还需计算
+                if (regIdCard.test(idCard)) {
+                    if (idCard.length == 18) {
+                        var idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2); //将前17位加权因子保存在数组里
+                        var idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2); //这是除以11后，可能产生的11位余数、验证码，也保存成数组
+                        var idCardWiSum = 0; //用来保存前17位各自乖以加权因子后的总和
+                        for (var i = 0; i < 17; i++) {
+                            idCardWiSum += idCard.substring(i, i + 1) * idCardWi[i];
+                        }
+                        var idCardMod = idCardWiSum % 11;//计算出校验码所在数组的位置
+                        var idCardLast = idCard.substring(17);//得到最后一位身份证号码
+                        //如果等于2，则说明校验码是10，身份证号码最后一位应该是X
+                        if (idCardMod == 2) {
+                            if (idCardLast == "X" || idCardLast == "x") {
+                                return true;
+                                //alert("恭喜通过验证啦！");
+                            } else {
+                                return false;
+                                //alert("身份证号码错误！");
+                            }
+                        } else {
+                            //用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
+                            if (idCardLast == idCardY[idCardMod]) {
+                                //alert("恭喜通过验证啦！");
+                                return true;
+                            } else {
+                                return false;
+                                //alert("身份证号码错误！");
+                            }
+                        }
+                    }
+                } else {
+                    //alert("身份证格式不正确!");
+                    return false;
+                }
+            }
+
+            $(document).ready(function(){
+
+                $("#imgVerify").click(function () {
+                    $("#imgVerify").attr("src", "/getVerify?"+Math.random());
+                });
+
+                $("#hq_btn").click(function () {
+                    var name = $("#name").val();
+                    var sfzhm = $("#sfzhm").val();
+                    var secrCode = $("#secrCode").val();
+
+                    if(name == null || name == ""){
+                        alert("用户名不能为空");
+                    }else if(sfzhm == null || sfzhm == ""){
+                        alert("身份证号码不能为空");
+                    }else if(!validateIdCard(sfzhm)){
+                        alert("身份证号码验证失败");
+                    }else if(secrCode == null || secrCode == ""){
+                        alert("验证码不能为空");
+                    }else{
+                        $.post("/checkVerify",{secrCode:secrCode},function(result){
+                            if(result == true){
+                                $("#form").submit();
+                            }else{
+                                alert("验证码验证失败");
+                                $("#imgVerify").attr("src", "/getVerify?"+Math.random());
+                            }
+                        });
+                    }
+
+                });
+
+            });
+        </script>
+</head>
+
+<body class="yy_con">
+    <div class="bg_a"></div>
+    <div class="head new_head">
+        <div class="login_icon"><img src="images/logo.png"></div>
+
+    </div>
+    <div class="main_login yycx_log">
+        <form id="form" class="form-horizontal" action="/yqcx"  method="post" >
+        <div class="box_a sea_top">
+            <div class="login_item">
+                <input id="name" name="name" type="text" th:value="${name }" class="login_user" placeholder="请输入姓名">
+            </div>
+            <div class="login_item">
+                <input id="sfzhm" name="sfzhm" type="text" th:value="${sfzhm }" class="login_sfz" placeholder="请输入身份证号码">
+            </div>
+            <div class="login_item">
+                <input id="secrCode" name="secrCode" type="text" class="login_code" placeholder="请输入验证码">
+                <div class="code_img"><img id="imgVerify" src="/getVerify"></div>
+            </div>
+        </div>
+        <button class="back_but" type="button" id="hq_btn">提 交</button>
+        </form>
+        <div th:if="${status == 'success' && safeType == 0}" class="d_resources" style="display: block;">
+           <img src="images/green.png">
+            <p>更新于[[${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd')}]]<br>您的健康状况查询结果：绿码</p>
+            <p></p>
+        </div>
+        <div th:if="${status == 'success' && safeType == 1}" class="d_resources" style="display: block;">
+            <img src="images/yellow.png">
+            <p>更新于[[${qzsj }]]<br>您的健康状况查询结果：黄码</p>
+            <p></p>
+        </div>
+        <div th:if="${status == 'success' && safeType == 2}" class="d_resources" style="display: block;">
+            <img src="images/red.png">
+            <p>更新于[[${qzsj }]]<br>您的健康状况查询结果：红码</p>
+            <p></p>
+        </div>
+        <div th:if="${status == 'fail'}" class="d_resources" style="display: block;">
+            <p>对不起，系统出现异常！</p>
+            <p></p>
+        </div>
+    </div>
+    <div class="wx_tips">
+        <h1>温馨提示</h1>
+        <div class="table_tips">
+            <table>
+                <tr>
+                    <td><img src="images/red.png"></td>
+                    <td>
+                        <p>红码表示在既往的14天内，您和新冠病人有密切接触，请尽快联系当地社区卫生服务中心或疾病预防控制中心，接受集中隔离医学观察。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="images/yellow.png"></td>
+                    <td>
+                        <p>黄码表示在既往的14天内，您可能曾暴露于新冠病毒污染的环境中。请您联系当地社区卫生服务中心或疾病预防控制中心，近期内尽量不要外出，与家人保持一定的距离，每天测量体温2次。一旦出现发热、乏力、咳嗽、腹泻、结膜炎等任何不适，第一时间戴上口罩到附近医疗机构就诊，并主动告诉医生可能的暴露史。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="images/green.png"></td>
+                    <td>
+                        <p>绿码表示在数据更新日期前，您没有暴露在新冠病毒污染的环境中，建议您出门戴口罩，回家更换衣服并洗手。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="big_font">健康状况查询系统PC版可实现批量查询，查询页面地址：<a class="blue_link" href="https://jkksvr.hnhfpc.gov.cn/QYYZ/Login.aspx">https://jkksvr.hnhfpc.gov.cn/QYYZ/Login.aspx</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="cr_c">主办：岳阳市政务服务中心</div>
+    </div>
+    
+</body></html>

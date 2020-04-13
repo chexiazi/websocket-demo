@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="NoteServiceImplService" targetNamespace="http://impl.services.webservices.platform.note.chinacreator.com/" xmlns:ns1="http://services.webservices.platform.note.chinacreator.com/" xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://impl.services.webservices.platform.note.chinacreator.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:import location="http://222.242.228.180:9090/yynote/services/NoteService?wsdl=NoteService.wsdl" namespace="http://services.webservices.platform.note.chinacreator.com/">
+    </wsdl:import>
+  <wsdl:binding name="NoteServiceImplServiceSoapBinding" type="ns1:NoteService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getReport">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getReport">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getReportResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSms">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getSms">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getSmsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendSingleSms">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sendSingleSms">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendSingleSmsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendMultiSms">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sendMultiSms">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendMultiSmsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NoteServiceImplService">
+    <wsdl:port binding="tns:NoteServiceImplServiceSoapBinding" name="NoteServiceImplPort">
+      <soap:address location="http://222.242.228.180:9090/yynote/services/NoteService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

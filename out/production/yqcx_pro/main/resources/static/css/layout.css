@@ -1,0 +1,182 @@
+.prevent_item {
+    padding-top: 0.4rem;
+    border-top: 1px solid #eee;
+    margin-top: 0.4rem;
+}
+
+.box_a .prevent_item:first-child {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.prevent_title {
+    float: left;
+    line-height: 1.2rem;
+    margin: 0.3rem 0;
+    margin-right: 0.2rem;
+    font-size: 0.875rem;
+}
+
+.prevent_item .check_box {
+    margin-top: 0.2rem;
+    margin-bottom: 0.6rem;
+}
+
+.check_box {
+    position: relative;
+    width: 100%;
+    height: 2rem;
+    margin-top: 0.6rem;
+}
+
+.title_a {
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 0.4rem;
+    font-weight: normal;
+    border-left: 3px solid #4ba1e9;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    padding-left: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+.check_input {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    color: #333;
+    padding: 0px 0.6rem;
+    padding-right: 2rem;
+    border-radius: 3px;
+    background: #e6f1fc;
+    border: 1px solid #d8e3ed;
+    box-shadow: 0 0 4px #d8e3ed inset;
+    font-size: 0.875rem;
+    outline: none;
+}
+
+.check_input_code {
+    width: calc(100% - 110px);
+    height: 100%;
+    box-sizing: border-box;
+    color: #333;
+    padding: 0px 0.6rem;
+    padding-right: 2rem;
+    border-radius: 3px;
+    background: #e6f1fc;
+    border: 1px solid #d8e3ed;
+    box-shadow: 0 0 4px #d8e3ed inset;
+    font-size: 0.875rem;
+    outline: none;
+    float: left;
+}
+
+.check_btn_code {
+    float: right;
+    height: 100%;
+    border-radius: 3px;
+    border: 1px solid #5fb4eb;
+    box-sizing: border-box;
+    width: 100px;
+    background: linear-gradient(#53b0ea, #529dea);
+    margin-left: 10px;
+    text-align: center;
+    color: #fff;
+    font-size: 0.875rem;
+    line-height: 2rem;
+}
+
+.check_btn_not {
+    float: right;
+    height: 100%;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    width: 100px;
+    background: #eee;
+    margin-left: 10px;
+    text-align: center;
+    color: #888;
+    font-size: 0.875rem;
+    line-height: 2rem;
+}
+
+.check_box>i {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    top: 0px;
+    right: 0px;
+    background: url(../images/icon_down.png) no-repeat center;
+    background-size: 35% auto;
+}
+
+.check_table {
+    border: 1px solid #c6e2ff;
+    border-collapse: collapse;
+    width: 100%
+}
+
+.check_table tr.gray {
+    background: #eaeaea
+}
+
+.check_table tr.gray td {
+    color: #888
+}
+
+.check_table thead tr th {
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 2.5rem;
+    background: -webkit-gradient(linear, left top, left bottom, from(#5cb1ea), to(#4795df));
+    background: linear-gradient(#5cb1ea, #4795df);
+    color: #fff
+}
+
+.check_table tbody tr td {
+    font-size: .75rem;
+    font-weight: 400;
+    text-align: center;
+    line-height: 2.6rem
+}
+
+.check_table tbody tr:nth-child(2n) td {
+    background: #e3effb
+}
+
+.check_table .weui-cell {
+    padding: 0;
+}
+
+.check_table .weui-check+.weui-icon-checked {
+    margin: 0 auto;
+}
+
+.green {
+    color: #06cb97 !important;
+}
+
+.red {
+    color: #f16b91 !important;
+}
+
+.yellow {
+    color: #f0c34c !important;
+}
+
+.grey {
+    color: #888 !important;
+}
+
+.check_area {
+    width: calc(100% - 0.8rem - 2px);
+    height: 100%;
+    min-height: 10rem;
+    font-size: 0.875rem;
+    outline: none;
+    padding: 0.4rem;
+    border: 1px solid #c6e2ff;
+}
